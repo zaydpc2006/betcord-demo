@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Flip Coin Game</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(ellipse at bottom, #110d2a 0%, #03000c 100%);
+    color: #fff;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Header (same as DICE game) */
+  header{
+    font-family: "Orbitron", sans-serif;
+    position: fixed;
+    top:0; left:0;
+    height:55px;
+    width:100vw;
+    background-color: rgb(5,0,31);
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding:0 10px;
+    z-index: 10;
+  }
+
+  nav div{
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  nav {
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+
+  .mony{
+    color:white;
+    border-top-left-radius:14px;
+    border-bottom-right-radius:14px;
+    padding:2px 10px;
+    background: radial-gradient(ellipse at center, #05001f 0%, #8400ff 400%);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .pf img{
+    border-radius:50%;
+    width:30px;
+  }
+
+  /* Side Menu */
+  .side-menu {
+    width: 260px;
+    background: rgba(20, 20, 40, 0.9);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.5);
+    height: calc(100vh - 55px);
+    margin-top:55px;
+  }
+
+  .side-menu h2 { text-align:center; margin-bottom:10px; }
+
+  .control { display:flex; flex-direction:column; gap:6px; }
+
+  input[type="number"], input[type="range"] {
+    width:100%; border-radius:6px; border:none; padding:8px; outline:none;
+  }
+
+  button {
+    background:#4f46e5; border:none; color:white; padding:10px;
+    font-weight:600; border-radius:8px; cursor:pointer; transition:0.2s;
+  }
+
+  button:hover { background:#6d5dfc; }
+  button:disabled { background:gray; cursor:not-allowed; }
+
+  /* Coin area */
+  .coin-area {
+    flex:1; display:flex; justify-content:center; align-items:center; perspective:1000px;
+    margin-top:55px;
+    width: calc(100% - 260px);
+  }
+
+  .coin {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffd700, #daa520);
+    display:flex; justify-content:center; align-items:center;
+    font-size: 32px; font-weight:bold;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 1s ease-in-out;
+    position: relative;
+  }
+
+  .coin-face {
+    position: absolute;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border-radius: 50%;
+    display:flex; justify-content:center; align-items:center;
+  }
+
+  .coin-front { background: radial-gradient(circle at 30% 30%, #ffd700, #daa520); }
+  .coin-back { background: radial-gradient(circle at 30% 30%, #c0c0c0, #808080); transform: rotateY(180deg); }
+
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div style="display: flex;">
+    <a href="home.html"><img width="45px" src="discord.png"></a>
+    <h3><span class="sp1">BE〶</span><span class="sp2">CORD</span></h3>
+  </div>
+  <div class="mony">
+    <img width="30px" src="icon.png">
+    <span id="balance">Loading...</span>
+  </div>
+  <div class="pf">
+    <img src="user.jpg">
+    <h3>UR ZAME</h3>
+    <button><img width="10px" src="logout.png"></button>
+  </div>
+</header>
+
+<!-- Side Menu -->
+<div class="side-menu">
+  <h2>🪙 Flip Coin</h2>
+
+  <div class="control">
+    <label>Bet Amount:</label>
+    <input type="number" id="betAmount" min="1000" max="50000" value="1000">
+    <input type="range" id="betRange" min="1000" max="50000" step="100" value="1000">
+  </div>
+
+  <button id="flipBtn">Flip Coin</button>
+</div>
+
+<!-- Coin Area -->
+<div class="coin-area">
+  <div class="coin" id="coin">
+    <div class="coin-face coin-front">HEAD</div>
+    <div class="coin-face coin-back">TAIL</div>
+  </div>
+</div>
+
+<script>
+const balanceDisplay = document.getElementById('balance');
+const betInput = document.getElementById('betAmount');
+const betRange = document.getElementById('betRange');
+const flipBtn = document.getElementById('flipBtn');
+const coin = document.getElementById('coin');
+
+let balance = 0;
+let flipping = false;
+
+// PHP placeholders
+async function getBalance() {
+  try {
+    const res = await fetch('getBalance.php');
+    const data = await res.text();
+    balance = parseFloat(data) || 0;
+    balanceDisplay.textContent = balance.toFixed(2);
+  } catch { balanceDisplay.textContent = 'Error';
+   }
+}
+
+async function placeBet(amount) { await fetch('placeBet.php?amount='+amount); }
+async function win(amount) { await fetch('win.php?amount='+amount); }
+async function lose(amount) { await fetch('lose.php?amount='+amount); }
+
+// Sync input and range
+betRange.addEventListener('input',()=>betInput.value = betRange.value);
+betInput.addEventListener('input',()=>betRange.value = betInput.value);
+
+// Coin flip logic
+flipBtn.addEventListener('click', async () => {
+  if (flipping) return;
+  const bet = parseFloat(betInput.value);
+  if (bet>balance || bet<1000) { alert('Invalid bet'); return; }
+
+  flipping = true;
+  await placeBet(bet);
+
+  // Random result 0 = HEAD, 1 = TAIL
+  const result = Math.random() < 0.5 ? 0 : 1;
+  let rotation = 1800; // multiple spins
+  if (result === 1) rotation += 180; // show back for TAIL
+
+  coin.style.transform = `rotateY(${rotation}deg)`;
+
+  setTimeout(async ()=>{
+    if(result===0){
+      const reward = bet * 1.25;
+      await win(reward);
+      alert(`🎉 HEAD! You win ${reward.toFixed(2)}`);
+    } else {
+      await lose(bet);
+      alert('💥 TAIL! You lose your bet.');
+    }
+    flipping=false;
+    getBalance();
+  },1000);
+});
+
+getBalance();
+</script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DICE GMES</title>
+  <style>
+    :root{--bg:#0b1020;--accent:#8b5cf6;--muted:#94a3b8}
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+    body{margin:0;min-height:100vh;display:flex;background:linear-gradient(180deg,#040617 0%, #071029 100%);color:#e6eef8;overflow:hidden}
+    .side-menu{width:240px;background:rgba(255,255,255,0.03);padding:20px;display:flex;flex-direction:column;gap:12px;border-right:1px solid rgba(255,255,255,0.05)}
+    .side-menu h2{font-size:16px;margin:0 0 4px}
+    input[type=range], input[type=number]{width:100%;padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:inherit}
+    button{padding:10px 12px;border-radius:10px;border:0;background:var(--accent);color:white;cursor:pointer;transition:0.2s}
+    button:hover{opacity:0.85}
+    .main{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column}
+    .balance{font-weight:700;font-size:20px;margin:6px 0}
+    .dice {width:120px;height:120px;border-radius:12px;background:linear-gradient(180deg,#ffffff05,#00000030);display:flex;align-items:center;justify-content:center;margin:12px auto;font-size:48px;box-shadow:inset 0 -4px 12px rgba(0,0,0,0.6);transition:0.3s}
+    .dice.rolling{animation:shake 700ms linear}
+    @keyframes shake{0%{transform:rotate(0) translateY(0)}25%{transform:rotate(10deg) translateY(-6px)}50%{transform:rotate(-8deg) translateY(4px)}75%{transform:rotate(6deg) translateY(-2px)}100%{transform:rotate(0) translateY(0)}}
+    .result{padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);margin-top:10px;font-size:14px;min-height:40px;text-align:center;transition:0.2s}
+    .muted{color:var(--muted);font-size:13px;text-align:center}
+
+
+      
+   header{
+     font-family: "Orbitron", sans-serif;
+
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 55px;
+    width: 100vw;
+    background-color: rgb(5, 0, 31);
+    display: flex;
+    align-items: center;
+ justify-content: start;
+ padding-left: 8px;
+ font-family: "Orbitron", sans-serif;
+
+   }
+   .ad1{
+    border-top-left-radius: 60px ;
+     border-top-right-radius:20px ;
+      border-bottom-right-radius:20pc ;
+    
+    background-size: cover;
+   
+    width: 85vw;
+    height: 450px;
+    background-image: url(Baner.png);
+   }
+   .menu{
+    padding-top: 20px;
+    color: white;
+     font-family: "Orbitron", sans-serif;
+
+    position: fixed;
+    top: 55px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    height: 600px;
+    width: 210px;
+    border-bottom-right-radius: 100px;
+       background-color: rgb(9, 0, 54);
+       background: linear-gradient(to bottom,rgb(9, 0, 54),transparent);
+  
+   }
+   .menu a{
+    text-decoration: none;
+    color: white;
+     font-family: "Orbitron", sans-serif;
+    
+
+   }
+   h5{
+    font-weight: 300;
+
+   }
+   .menu-child{
+    padding: 0;
+    height: 33px;
+    width: 200px;
+    border-radius: 9px;
+background-color: #433794;
+border: solid grey 1px;
+display: flex;
+justify-content: start;
+gap: 30px;
+align-items: center;
+transition: 0.3s ease;
+   }
+      .menu-childb{
+    padding: 0;
+    height: 303px;
+    width: 200px;
+    border-radius: 9px;
+background-color: #433794;
+border: solid grey 1px;
+display: flex;
+justify-content: start;
+gap: 30px;
+align-items: center;
+transition: 0.3s ease;
+   }
+      .menu-child:hover{
+        margin-left: 40px;
+    padding: 0;
+    height: 33px;
+    width: 250px;
+   border-bottom-right-radius: 50px;
+background-color: #8375df;
+border: solid rgb(128, 128, 128,0.3) 1px;
+display: flex;
+justify-content: start;
+gap: 30px;
+align-items: center;
+
+   }
+    .menu-child img{
+   height: 33px;
+   width: 33px;
+
+
+   border-top-left-radius: 9Px;
+     border-bottom-left-radius: 9Px;
+    
+   }
+   .pf{
+    width: auto;
+    height: 34px;
+     border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+color: aliceblue;
+background-color: #110d2a;
+   }   .pf img{
+  border-radius: 50%;
+  width: 30px;
+   }
+    .pf button{
+  border-radius: 50%;
+  border: none;
+
+  width: 40px;
+  
+  color: white;
+  font-weight: 700;
+  border-radius: none;
+  height: 40px;
+  background-color: #0a000e;
+   }
+
+   .sp1{
+ font-family: "Orbitron", sans-serif;
+color: white;
+   }
+   .sp2{
+    font-family: "Orbitron", sans-serif;
+color: rgb(68, 0, 255);
+   }
+   .mony{
+    color: white;
+    border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  padding: 2px;
+  background:  radial-gradient(ellipse at center, #05001f 0%, #8400ff 400%);
+height: 35px;
+width: 500px;
+
+}  .mony{
+    color: white;
+    border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  padding: 2px;
+  background:  radial-gradient(ellipse at center, #05001f 0%, #8400ff 400%);
+height: 35px;
+width: 500px;
+gap: 4rem;
+
+display: flex;
+justify-content: start;
+}
+  .mony button{
+  width: 100px;
+  height: 25px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  background-color: #8400ff;
+
+}
+   nav{
+    display: flex;
+justify-content: start;
+align-items: center;
+gap: 500px;
+   }
+   nav div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px;
+   }
+  </style>
+</head>
+<body>
+  <a class="back" href="home.html"></a>
+    <header>
+    <nav>
+        <div> <a  c href="home.html"><img width="45px" src="discord.png" ></a>
+            <h3><span class="sp1">BE〶</span ><span class="sp2">CORD</span></h3>
+        </div>
+
+         <div class="mony"><img width="30px" src="icon.png">
+        <span id="balance">Loading...</span>
+    
+</div>
+
+          <div class="pf"><img src="user.jpg">
+            <h3>UR ZAME</h3>
+            <button><img width="10px" src="logout.png" ></button>
+        </div>
+    </nav>
+</header>
+  <div class="side-menu">
+    <h2>Bet Controls 🎰</h2>
+    <label for="playAmount">Bet Amount:</label>
+    <input id="playAmount" type="range" min="1000" max="50000" step="500" value="1000">
+    <input id="playAmountNumber" type="number" min="1000" max="50000" step="500" value="1000">
+
+    <label for="multiplier">Multiplier (1.25–2):</label>
+    <input id="multiplier" type="range" min="1.25" max="2" step="0.05" value="1.25">
+    <input id="multiplierNumber" type="number" min="1.25" max="2" step="0.05" value="1.25">
+
+    <button id="placeBetBtn">Place Bet</button>
+    <div class="muted">Win gives multiplier Up to ×2 </div>
+  </div>
+
+  <div class="main">
+    <h1>Dice Gamble — Random Multiplier 🎲</h1>
+  
+    <div id="dice" class="dice">—</div>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    (function(){
+      let balance = 0;
+      let playAmount = 1000;
+      let multiplier = 1.25;
+      const balanceEl = document.getElementById('balance');
+      const diceEl = document.getElementById('dice');
+      const resultEl = document.getElementById('result');
+      const placeBetBtn = document.getElementById('placeBetBtn');
+      const playRange = document.getElementById('playAmount');
+      const playNum = document.getElementById('playAmountNumber');
+      const multRange = document.getElementById('multiplier');
+      const multNum = document.getElementById('multiplierNumber');
+
+      // Load balance from PHP
+      fetch('get_balance.php')
+        .then(response => response.text())
+        .then(data => {
+          balance = Number(data);
+          updateBalance();
+        })
+        .catch(err => {
+          console.error('Could not fetch balance:', err);
+          balance = 0;
+          updateBalance();
+        });
+
+      playRange.addEventListener('input', ()=>{ playNum.value = playRange.value; playAmount = Number(playRange.value); });
+      playNum.addEventListener('input', ()=>{ playRange.value = playNum.value; playAmount = Number(playNum.value); });
+
+      multRange.addEventListener('input', ()=>{ multNum.value = multRange.value; multiplier = Number(multRange.value); });
+      multNum.addEventListener('input', ()=>{ multRange.value = multNum.value; multiplier = Number(multNum.value); });
+
+      function updateBalance(){ balanceEl.textContent = balance.toFixed(0); }
+
+      placeBetBtn.addEventListener('click', ()=>{
+        if(balance < playAmount){ alert('Not enough balance!'); return; }
+        // Placeholder PHP request to deduct bet
+        fetch('place_bet.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'amount=' + encodeURIComponent(playAmount)
+        });
+
+        diceEl.classList.add('rolling');
+        diceEl.textContent = '';
+
+        setTimeout(()=>{
+          diceEl.classList.remove('rolling');
+          const roll = Math.floor(Math.random()*6) + 1;
+          diceEl.textContent = roll;
+
+          let winChance = 1.25 / multiplier;
+          winChance = Math.min(1, winChance);
+          const win = Math.random() < winChance && roll > 3;
+
+          if(win){
+            const profit = playAmount * (multiplier - 1);
+            balance += profit;
+            resultEl.innerHTML = `<strong>Win!</strong> Rolled ${roll}, earned +${profit.toFixed(0)} ⍟.`;
+            // Placeholder PHP call for win
+            fetch('win.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: 'amount=' + encodeURIComponent(profit)
+            });
+          } else {
+            balance -= playAmount;
+            resultEl.innerHTML = `<strong>Lose!</strong> Rolled ${roll}, lost ${playAmount} ⍟.`;
+            if(balance <= 0){ balance = 0; resultEl.innerHTML += '<br><strong>Game Over — no balance left.</strong>'; placeBetBtn.disabled = true; }
+          }
+
+          updateBalance();
+        }, 800);
+      });
+
+    })();
+    // Prevent opening dev tools via keyboard
+document.addEventListener('keydown', function(e) {
+    // F12
+    if (e.key === "F12") {
+        window.location.href = 'Warning.html';
+    }
+    // Ctrl+Shift+I or Ctrl+Shift+J
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
+        window.location.href = 'Warning.html';
+    }
+    // Ctrl+U (view source)
+    if (e.ctrlKey && e.key === 'U') {
+        window.location.href = 'Warning.html';
+    }
+});
+
+// Detect DevTools opening using window size (optional)
+let devtoolsOpen = false;
+const threshold = 160; // px difference threshold
+setInterval(() => {
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    if (widthThreshold || heightThreshold) {
+        if (!devtoolsOpen) {
+            devtoolsOpen = true;
+            window.location.href = 'Warning.html';
+        }
+    } else {
+        devtoolsOpen = false;
+    }
+}, 500);
+
+  </script>
+</body>
+</html>

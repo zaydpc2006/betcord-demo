@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mines Game</title>
+  <style>
+    header{
+  font-family: "Orbitron", sans-serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 55px;
+  width: 100vw;
+  background-color: rgb(5, 0, 31);
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 8px;
+  z-index: 10;
+}
+
+nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+}
+
+nav div{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mony{
+  color: white;
+  border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  padding: 2px 10px;
+  background: radial-gradient(ellipse at center, #05001f 0%, #8400ff 400%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pf{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  background-color: #110d2a;
+  border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  color: aliceblue;
+}
+
+.pf img{
+  border-radius: 50%;
+  width: 30px;
+}
+
+.pf button{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #0a000e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(ellipse at bottom, #110d2a 0%, #03000c 100%);
+      color: #fff;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Side Menu */
+    .side-menu {
+      width: 260px;
+      background: rgba(20, 20, 40, 0.9);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 15px;
+      box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .side-menu h2 {
+      margin: 0 0 10px;
+      text-align: center;
+    }
+
+    .control {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    input[type="number"],
+    input[type="range"] {
+      width: 100%;
+      border-radius: 6px;
+      border: none;
+      padding: 8px;
+      outline: none;
+    }
+
+    button {
+      background: #4f46e5;
+      border: none;
+      color: white;
+      padding: 10px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #6d5dfc;
+    }
+
+    button:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+
+    /* Game Board */
+    .board {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      gap: 8px;
+      padding: 20px;
+      align-items: center;
+      justify-items: center;
+      perspective: 1000px;
+    }
+
+    .cell {
+      width: 150px;
+      height: 150px;
+      position: relative;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+
+    .cell.flip {
+      transform: rotateY(180deg);
+    }
+
+    .cell-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: white;
+    }
+
+    .cell-front {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .cell-back {
+      transform: rotateY(180deg);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .cell-back.cash {
+      background: #22c55e;
+      box-shadow: 0 0 15px #22c55e;
+    }
+
+    .cell-back.bomb {
+      background: crimson;
+      box-shadow: 0 0 15px crimson;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="side-menu">
+    <h2>💣 Mines</h2>
+
+    <div class="control">
+      <label>Balance:</label>
+      <span id="balance">Loading...</span>
+    </div>
+
+    <div class="control">
+      <label>Bet Amount:</label>
+      <input type="number" id="betAmount" min="1000" max="50000" value="1000">
+      <input type="range" id="betRange" min="1000" max="50000" step="100" value="1000">
+    </div>
+
+    <div class="control">
+      <label>Mines: <span id="mineCountDisplay">1</span></label>
+      <input type="range" id="mineCount" min="1" max="3" value="1">
+    </div>
+
+    <button id="startGame">Start Game</button>
+    <button id="cashOut" disabled>Cash Out</button>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <script>
+    const board = document.getElementById('board');
+    const startBtn = document.getElementById('startGame');
+    const cashOutBtn = document.getElementById('cashOut');
+    const betInput = document.getElementById('betAmount');
+    const betRange = document.getElementById('betRange');
+    const mineCountRange = document.getElementById('mineCount');
+    const mineCountDisplay = document.getElementById('mineCountDisplay');
+    const balanceDisplay = document.getElementById('balance');
+
+    let balance = 0;
+    let gameStarted = false;
+    let bombs = [];
+    let revealed = 0;
+    let totalMines = 1;
+    let multiplier = 1.25;
+
+    async function getBalance() {
+      try {
+        const res = await fetch('getBalance.php');
+        const data = await res.text();
+        balance = parseFloat(data) || 0;
+        balanceDisplay.textContent = balance.toFixed(2);
+      } catch {
+        balanceDisplay.textContent = 'Error';
+      }
+    }
+
+    async function placeBet(amount) {
+      await fetch('placeBet.php?amount=' + amount);
+    }
+
+    async function win(amount) {
+      await fetch('win.php?amount=' + amount);
+    }
+
+    async function lose(amount) {
+      await fetch('lose.php?amount=' + amount);
+    }
+
+    function setupBoard() {
+      board.innerHTML = '';
+      for (let i = 0; i < 36; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        const front = document.createElement('div');
+        front.classList.add('cell-face', 'cell-front');
+        const back = document.createElement('div');
+        back.classList.add('cell-face', 'cell-back');
+        cell.append(front, back);
+        cell.addEventListener('click', () => revealCell(i, cell, back));
+        board.appendChild(cell);
+      }
+    }
+
+    function randomizeBombs() {
+      bombs = [];
+      while (bombs.length < totalMines) {
+        const rand = Math.floor(Math.random() * 36);
+        if (!bombs.includes(rand)) bombs.push(rand);
+      }
+    }
+
+    function revealCell(index, cell, back) {
+      if (!gameStarted || cell.classList.contains('flip')) return;
+      cell.classList.add('flip');
+
+      if (bombs.includes(index)) {
+        back.classList.add('bomb');
+        lose(parseFloat(betInput.value));
+        setTimeout(() => {
+          alert('💥 You hit a bomb! You lost.');
+          gameStarted = false;
+          cashOutBtn.disabled = true;
+        }, 500);
+      } else {
+        back.classList.add('cash');
+        revealed++;
+        if (revealed >= 3) cashOutBtn.disabled = false;
+      }
+    }
+
+    startBtn.addEventListener('click', async () => {
+      const bet = parseFloat(betInput.value);
+      if (bet > balance || bet < 1000) {
+        alert('Invalid bet amount.');
+        return;
+      }
+
+      totalMines = parseInt(mineCountRange.value);
+      multiplier = totalMines === 1 ? 1.25 : totalMines === 2 ? 1.5 : 2.0;
+
+      await placeBet(bet);
+      gameStarted = true;
+      revealed = 0;
+      cashOutBtn.disabled = true;
+      randomizeBombs();
+      setupBoard();
+    });
+
+    cashOutBtn.addEventListener('click', async () => {
+      if (!gameStarted || revealed < 3) return;
+
+      const bet = parseFloat(betInput.value);
+      const reward = bet * multiplier;
+      await win(reward);
+      alert(`🎉 You cashed out with ${reward.toFixed(2)}!`);
+      gameStarted = false;
+      cashOutBtn.disabled = true;
+      getBalance();
+    });
+
+    betRange.addEventListener('input', () => betInput.value = betRange.value);
+    betInput.addEventListener('input', () => betRange.value = betInput.value);
+    mineCountRange.addEventListener('input', () => mineCountDisplay.textContent = mineCountRange.value);
+
+    getBalance();
+    setupBoard();
+    // Prevent opening dev tools via keyboard
+document.addEventListener('keydown', function(e) {
+    // F12
+    if (e.key === "F12") {
+        window.location.href = 'Warning.html';
+    }
+    // Ctrl+Shift+I or Ctrl+Shift+J
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
+        window.location.href = 'Warning.html';
+    }
+    // Ctrl+U (view source)
+    if (e.ctrlKey && e.key === 'U') {
+        window.location.href = 'Warning.html';
+    }
+});
+
+// Detect DevTools opening using window size (optional)
+let devtoolsOpen = false;
+const threshold = 160; // px difference threshold
+setInterval(() => {
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    if (widthThreshold || heightThreshold) {
+        if (!devtoolsOpen) {
+            devtoolsOpen = true;
+            window.location.href = 'Warning.html';
+        }
+    } else {
+        devtoolsOpen = false;
+    }
+}, 500);
+
+  </script>
+  <header>
+  <nav>
+    <div>
+      <a href="home.html"><img width="45px" src="discord.png"></a>
+      <h3><span class="sp1">BE〶</span><span class="sp2">CORD</span></h3>
+    </div>
+
+    <div class="mony">
+      <img width="30px" src="icon.png">
+      <span id="balance">Loading...</span>
+    </div>
+
+    <div class="pf">
+      <img src="user.jpg">
+      <h3>UR ZAME</h3>
+      <button><img width="10px" src="logout.png"></button>
+    </div>
+  </nav>
+</header>
+
+</body>
+</html>

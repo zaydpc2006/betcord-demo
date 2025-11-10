@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BE〶CORD Slots</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Orbitron", sans-serif;
+      background: radial-gradient(ellipse at bottom, #0d272a 0%, #000b0c 100%);
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 55px;
+      width: 100%;
+      background-color: rgb(0, 25, 31);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 10;
+    }
+
+    header div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sp1 { color: white; }
+    .sp2 { color: rgb(111, 0, 255); }
+
+    .mony {
+      background: radial-gradient(ellipse at center, #00181f 0%, #001aff 400%);
+      border-top-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+    }
+
+    .pf {
+      background-color: #0d2a2a;
+      border-top-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pf img {
+      border-radius: 50%;
+      width: 30px;
+    }
+
+    /* Layout */
+    .main {
+      margin-top: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 80px);
+      width: 100%;
+      gap: 40px;
+    }
+
+    /* Controls */
+    .controls {
+      background-color: #001f1f;
+      border: 2px solid #37948f;
+      border-radius: 20px;
+      padding: 20px;
+      width: 220px;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 0 15px #8400ff;
+    }
+
+    .controls h3 {
+      margin: 0;
+      color: #a6a3ff;
+    }
+
+    input[type="number"] {
+      background-color: #000e0e;
+      border: 2px solid #8400ff;
+      border-radius: 10px;
+      color: white;
+      width: 120px;
+      text-align: center;
+      height: 30px;
+    }
+
+    input[type="range"] {
+      width: 150px;
+      accent-color: #00ffdd;
+    }
+
+    button {
+      background-color: #4275ff;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      height: 40px;
+      width: 120px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #a95bff;
+      transform: scale(1.05);
+    }
+
+    /* Slots */
+    .slot-machine {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .slot {
+      width: 130px;
+      height: 130px;
+      background: #13353b;
+      border-radius: 20px;
+      border: 2px solid #378994;
+      font-size: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 0 25px #00eeff;
+      position: relative;
+    }
+
+    .symbols {
+      position: absolute;
+      top: 0;
+      transition: top 1s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .symbol {
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+    }
+
+    #result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <a href="home.html"><img width="45px" src="discord.png"></a>
+      <h3><span class="sp1">BE〶</span><span class="sp2">CORD</span></h3>
+    </div>
+
+    <div class="mony">
+      <img width="30px" src="icon.png">
+      <span id="balance">Loading...</span>
+    </div>
+
+    <div class="pf">
+      <img src="user.jpg">
+      <h3>UR ZAME</h3>
+      <button><img width="10px" src="logout.png"></button>
+    </div>
+  </header>
+
+  <div class="main">
+    <!-- Left side control panel -->
+    <div class="controls">
+      <h3>💰 Balance</h3>
+      <span id="sideBalance">Loading...</span>
+
+      <h3>🎯 Bet Amount</h3>
+      <input type="number" id="betInput" value="1000" min="1000" max="50000">
+      <input type="range" id="betRange" min="1000" max="50000" step="500" value="1000">
+
+      <button id="spin">SPIN 🎰</button>
+    </div>
+
+    <!-- Slot machine -->
+    <div>
+      <div class="slot-machine">
+        <div class="slot"><div class="symbols" id="slot1"></div></div>
+        <div class="slot"><div class="symbols" id="slot2"></div></div>
+        <div class="slot"><div class="symbols" id="slot3"></div></div>
+      </div>
+      <div id="result"></div>
+    </div>
+  </div>
+
+  <script>
+    const symbols = ["🍒", "🍋", "🍉", "⭐", "💎", "🔔"];
+    let balance = 0;
+
+    // Load balance from PHP
+    document.addEventListener("DOMContentLoaded", () => getBalance());
+
+    function getBalance() {
+      fetch("getBalance.php")
+        .then(res => res.json())
+        .then(data => {
+          balance = parseFloat(data.balance);
+          document.getElementById("balance").textContent = balance + " 💰";
+          document.getElementById("sideBalance").textContent = balance + " 💰";
+        })
+        .catch(() => {
+          document.getElementById("balance").textContent = "Error";
+          document.getElementById("sideBalance").textContent = "Error";
+        });
+    }
+
+    const betInput = document.getElementById("betInput");
+    const betRange = document.getElementById("betRange");
+    betRange.addEventListener("input", () => betInput.value = betRange.value);
+    betInput.addEventListener("input", () => betRange.value = betInput.value);
+
+    document.getElementById("spin").addEventListener("click", () => {
+      const bet = parseInt(betInput.value);
+      if (isNaN(bet) || bet < 1000 || bet > 50000) {
+        document.getElementById("result").textContent = "⚠️ Bet must be between 1000 and 50000!";
+        return;
+      }
+
+      if (bet > balance) {
+        document.getElementById("result").textContent = "💸 Not enough balance!";
+        return;
+      }
+
+      document.getElementById("result").textContent = "Spinning... 🎡";
+
+      // Subtract bet immediately
+      balance -= bet;
+      updateDisplayBalance();
+
+      // Animate reels
+      const results = [];
+      for (let i = 1; i <= 3; i++) {
+        const slot = document.getElementById("slot" + i);
+        const randomSymbols = [];
+        for (let j = 0; j < 12; j++) {
+          randomSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]);
+        }
+        slot.innerHTML = randomSymbols.map(s => `<div class='symbol'>${s}</div>`).join("");
+        slot.style.top = "0px";
+        const target = -130 * (Math.floor(Math.random() * 12));
+        setTimeout(() => {
+          slot.style.transition = "top 1s cubic-bezier(0.33, 1, 0.68, 1)";
+          slot.style.top = target + "px";
+          results[i - 1] = randomSymbols[Math.abs(target / 130)];
+        }, i * 150);
+      }
+
+      setTimeout(() => {
+        // Probability system (3 wins for 1 loss)
+        const winChance = Math.random();
+        let win = winChance < 0.65; // 65% win rate
+        if (win) {
+          document.getElementById("result").textContent = `🎉 You won +${bet * 0.25}`;
+          balance += bet * 1.25; // total = initial bet + 25%
+          updateBalance("win.php", bet * 0.25);
+        } else {
+          document.getElementById("result").textContent = `😢 You lost -${bet}`;
+          updateBalance("lose.php", bet);
+        }
+        updateDisplayBalance();
+      }, 1500);
+    });
+    function updateDisplayBalance() {
+      document.getElementById("balance").textContent = balance.toFixed(2) + " 💰";
+      document.getElementById("sideBalance").textContent = balance.toFixed(2) + " 💰";
+    }
+
+    function updateBalance(url, amount) {
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "amount=" + amount
+      }).then(() => getBalance());
+    }
+    // Prevent opening dev tools via keyboard
+document.addEventListener('keydown', function(e) {
+    // F12
+    if (e.key === "F12") {
+        window.location.href = 'Warning.html';
+    }
+    // Ctrl+Shift+I or Ctrl+Shift+J
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
+        window.location.href = 'Warning.html';
+    }
+    // Ctrl+U (view source)
+    if (e.ctrlKey && e.key === 'U') {
+        window.location.href = 'Warning.html';
+    }
+});
+
+// Detect DevTools opening using window size (optional)
+let devtoolsOpen = false;
+const threshold = 160; // px difference threshold
+setInterval(() => {
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    if (widthThreshold || heightThreshold) {
+        if (!devtoolsOpen) {
+            devtoolsOpen = true;
+            window.location.href = 'Warning.html';
+        }
+    } else {
+        devtoolsOpen = false;
+    }
+}, 500);
+
+  </script>
+</body>
+</html>

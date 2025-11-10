@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <title>HOME</title>
+    <link rel="icon" href="discord.png">
+</head>
+<style>
+     body {
+      margin: 0;
+      
+   overflow-x: hidden;
+      background: radial-gradient(ellipse at bottom, #110d2a 0%, #03000c 100%);
+      z-index: -1;
+      background-repeat: no-repeat;
+      height: 100vh;
+      z-index: 2;
+      background-attachment: fixed;
+    }
+    canvas {
+      position: fixed;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+    
+     
+    }
+  
+   header{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 55px;
+    width: 100vw;
+    background-color: rgb(5, 0, 31);
+    display: flex;
+    align-items: center;
+ justify-content: start;
+ padding-left: 8px;
+ font-family: "Orbitron", sans-serif;
+
+   }
+   .ad1{
+    border-top-left-radius: 60px ;
+     border-top-right-radius:20px ;
+      border-bottom-right-radius:20pc ;
+    
+    background-size: cover;
+   
+    width: 85vw;
+    height: 450px;
+    background-image: url(Baner.png);
+   }
+   .menu{
+    padding-top: 20px;
+    color: white;
+     font-family: "Orbitron", sans-serif;
+
+    position: fixed;
+    top: 55px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    height: 600px;
+    width: 210px;
+    border-bottom-right-radius: 100px;
+       background-color: rgb(9, 0, 54);
+       background: linear-gradient(to bottom,rgb(9, 0, 54),transparent);
+  
+   }
+   .menu a{
+    text-decoration: none;
+    color: white;
+     font-family: "Orbitron", sans-serif;
+    
+
+   }
+   h5{
+    font-weight: 300;
+
+   }
+   .menu-child{
+    padding: 0;
+    height: 33px;
+    width: 200px;
+    border-radius: 9px;
+background-color: #433794;
+border: solid grey 1px;
+display: flex;
+justify-content: start;
+gap: 30px;
+align-items: center;
+transition: 0.3s ease;
+   }
+      .menu-childb{
+    padding: 0;
+    height: 303px;
+    width: 200px;
+    border-radius: 9px;
+background-color: #433794;
+border: solid grey 1px;
+display: flex;
+justify-content: start;
+gap: 30px;
+align-items: center;
+transition: 0.3s ease;
+   }
+      .menu-child:hover{
+        margin-left: 40px;
+    padding: 0;
+    height: 33px;
+    width: 250px;
+   border-bottom-right-radius: 50px;
+background-color: #8375df;
+border: solid rgb(128, 128, 128,0.3) 1px;
+display: flex;
+justify-content: start;
+gap: 30px;
+align-items: center;
+
+   }
+    .menu-child img{
+   height: 33px;
+   width: 33px;
+
+
+   border-top-left-radius: 9Px;
+     border-bottom-left-radius: 9Px;
+    
+   }
+   .pf{
+    width: auto;
+    height: 34px;
+     border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+color: aliceblue;
+background-color: #110d2a;
+   }   .pf img{
+  border-radius: 50%;
+  width: 30px;
+   }
+    .pf button{
+  border-radius: 50%;
+  border: none;
+
+  width: 40px;
+  
+  color: white;
+  font-weight: 700;
+  border-radius: none;
+  height: 40px;
+  background-color: #0a000e;
+   }
+
+   .sp1{
+ font-family: "Orbitron", sans-serif;
+color: white;
+   }
+   .sp2{
+    font-family: "Orbitron", sans-serif;
+color: rgb(68, 0, 255);
+   }
+   .mony{
+    color: white;
+    border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  padding: 2px;
+  background:  radial-gradient(ellipse at center, #05001f 0%, #8400ff 400%);
+height: 35px;
+width: 500px;
+
+}  .mony{
+    color: white;
+    border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  padding: 2px;
+  background:  radial-gradient(ellipse at center, #05001f 0%, #8400ff 400%);
+height: 35px;
+width: 500px;
+gap: 4rem;
+
+display: flex;
+justify-content: start;
+}
+  .mony button{
+  width: 100px;
+  height: 25px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  background-color: #8400ff;
+
+}
+   nav{
+    display: flex;
+justify-content: start;
+align-items: center;
+gap: 500px;
+   }
+   nav div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px;
+   }
+   .cnt{
+    position: absolute;
+    top: 60px;
+    left:250px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85vw;
+    height: auto;
+    gap: 10px;
+    flex-direction: column;
+
+   }
+
+
+
+
+
+
+  /* Scrollbar width */
+::-webkit-scrollbar {
+  width: 6px; /* controls thickness */
+}
+
+/* Track (the background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background-color: #1a1a1a; /* darker track for contrast */
+  border-radius: 10px;
+}
+
+/* Thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background-color: #8400ff;
+  border-radius: 10px;
+}
+
+/* Buttons (optional, rarely used in modern browsers) */
+::-webkit-scrollbar-button {
+  background-color: #8400ff;
+}
+
+
+
+
+
+
+   hr{
+color: white;
+background-color: white;
+width: 100vw;
+
+
+   }
+   .slid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  
+    
+   }
+   .card{
+   
+    height: 320px;
+    width: 220px;
+    border-radius: 9px;
+    background-color: #0c0029;
+   }
+     .card a{
+     height: 320px;
+    width: 220px;
+    border-radius: 9px;
+    
+   }
+    .card img{
+     height: 320px;
+    width: 220px;
+    border-radius: 9px;
+    transition: 0.3s ease-in-out;
+    
+   }
+   .card img:hover{
+  transform: scale(0.95);
+
+    
+   }
+  
+    .card-big{
+    height: 350px;
+    width: 450px;
+    border-radius: 9px;
+    background-color: #0400ff;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 20px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    
+   }
+    .card-big:hover{
+   background-position: center;
+   }
+
+</style>
+<body>
+    <div class="cnt">
+        <div  class="ad1"></div>
+<hr>
+<h3 style="display: flex; gap: 3px;justify-content: safe;
+text-align: start;position: relative;right: 40%;
+margin: -10px;"><span class="sp1">NEW</span> <span class="sp2">GAMES</span></h3>
+<hr>
+
+<div class="slid">
+    <div class="card"><a  href=""><img src="pairgame.jpg" ></a></div>
+       <div class="card"><a  href="flip.html"><img src="coingame.jpg" ></a></div>
+               <div class="card"><a  href="slot1.html"><img src="slotcard1.jpg" ></a></div>
+       <div class="card"><a  href="dice.html"><img src="dicecard.jpg" ></a></div>
+       <div class="card"><a  href=""><img src="card2.jpg" ></a></div>
+         <div class="card"><a  href="slots2.html"><img src="slotcard2.jpg" ></a></div>
+</div>
+
+<hr>
+<h3 style="display: flex; gap: 3px;justify-content: safe;
+text-align: start;position: relative;right: 40%;
+margin: -10px;"><span class="sp1">Coming</span> <span class="sp2">SOON</span></h3>
+<hr>
+
+<div class="slid">
+   <div style="background-image: url(slots.jpg);background-size: cover; background-position: center;" class="card-big"></div>
+   <div style="background-image: url(casino.jpg);background-size: cover; background-position: center;"  class="card-big"></div>
+   <div style="background-image: url(table2.jpg);background-size: cover; background-position: center;"  class="card-big"></div>
+</div>
+
+ <div style="background-image: url(adds.png);"  class="ad1"></div>
+</div>
+    
+
+<header>
+    <nav>
+        <div> <a  c href="home.html"><img width="45px" src="discord.png" ></a>
+            <h3><span class="sp1">BE〶</span ><span class="sp2">CORD</span></h3>
+        </div>
+
+         <div class="mony"><img width="30px" src="icon.png">
+        <span>10.00</span>
+    <button>BUY NOW</button>
+        <button>WITHDRAW</button>
+</div>
+
+          <div class="pf"><img src="user.jpg">
+            <h3>UR ZAME</h3>
+            <button><img width="10px" src="logout.png" ></button>
+        </div>
+    </nav>
+</header>
+
+
+<div class="menu">
+    <a  href="">
+      <div class="menu-child">
+        <img width="20px" src="home.png">
+        <h5>Home</h5>
+           
+    </div></a>
+    <a href="">
+      <div class="menu-child">
+        <img width="20px" src="slots.png">
+        <h5>Slots</h5>
+           
+    </div></a>
+     <a href="">
+      <div class="menu-child">
+        <img width="20px" src="chip.png">
+        <h5>Originale</h5>
+           
+    </div></a>
+     <a href="">
+      <div class="menu-child">
+        <img width="20px" src="dice.png">
+        <h5>Dices</h5>
+           
+    </div></a>
+
+
+
+
+    <a href="https://discord.gg/tyJE7uT9u7">
+      <div style="background: linear-gradient(45deg , rgb(39, 0, 39),transparent);" class="menu-childb">
+        <img width="200px" src="discord.png">
+       
+           
+    </div></a>
+</div>
+
+    
+  <canvas id="starfield">
+
+  </canvas>
+
+  <script>
+    // Prevent opening dev tools via keyboard
+document.addEventListener('keydown', function(e) {
+    // F12
+    if (e.key === "F12") {
+        window.location.href = 'Warning.html';
+    }
+    // Ctrl+Shift+I or Ctrl+Shift+J
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
+        window.location.href = 'Warning.html';
+    }
+    // Ctrl+U (view source)
+    if (e.ctrlKey && e.key === 'U') {
+        window.location.href = 'Warning.html';
+    }
+});
+
+// Detect DevTools opening using window size (optional)
+let devtoolsOpen = false;
+const threshold = 160; // px difference threshold
+setInterval(() => {
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    if (widthThreshold || heightThreshold) {
+        if (!devtoolsOpen) {
+            devtoolsOpen = true;
+            window.location.href = 'Warning.html';
+        }
+    } else {
+        devtoolsOpen = false;
+    }
+}, 500);
+
+    function notify(){
+        const notif = document.getElementById("not");
+        const audio = new Audio('info.mp3'); 
+        setTimeout(() => {
+    notif.classList.add('show');
+}, 300); 
+  setTimeout(() => {
+    notif.classList.remove('show');
+}, 2300); 
+    audio.play();
+    }
+    
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+
+    let stars = [];
+    let mouseX = 0, mouseY = 0;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Create hundreds of stars
+    const numStars = 400;
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 0.5,
+        speed: Math.random() * 0.3 + 0.05,
+        glow: Math.random() * 0.7 + 0.3
+      });
+    }
+
+    document.addEventListener('mousemove', e => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+
+        // Apply parallax based on mouse position
+        const offsetX = mouseX * s.size * 5;
+        const offsetY = mouseY * s.size * 5;
+
+        ctx.beginPath();
+        ctx.arc(s.x + offsetX, s.y + offsetY, s.size, 0, Math.PI * 2);
+        const gradient = ctx.createRadialGradient(
+          s.x + offsetX,
+          s.y + offsetY,
+          0,
+          s.x + offsetX,
+          s.y + offsetY,
+          s.size * 2
+        );
+        gradient.addColorStop(0, `rgba(255,255,255,${s.glow})`);
+        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        // Move stars upward smoothly
+        s.y -= s.speed;
+        if (s.y < -5) {
+          s.y = canvas.height + 5;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+</html>
